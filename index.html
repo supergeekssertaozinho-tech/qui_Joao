@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Site Base</title>
+
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Arial, sans-serif;
+    }
+
+    body {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+        perspective: 900px;
+        -webkit-perspective: 900px;
+        perspective-origin: 50% 10%;
+        overflow-x: hidden;
+    }
+
+    /* ===================================== */
+    /* HEADER COM IMAGEM NO LUGAR DO TEXTO   */
+    /* ===================================== */
+
+    header {
+        background: #ffffff;
+        padding: 20px;
+        text-align: center;
+
+        transform-style: preserve-3d;
+        animation: floatZ 3s ease-in-out infinite;
+    }
+
+    header img {
+        width: 260px;
+        max-width: 80%;
+        height: auto;
+        pointer-events: none;
+        user-select: none;
+        transform: translateZ(0);
+    }
+
+    @keyframes floatZ {
+        0% { transform: translateZ(0) translateY(0); }
+        50% { transform: translateZ(25px) translateY(-4px) scale(1.02); }
+        100% { transform: translateZ(0) translateY(0); }
+    }
+
+    /* ===================================== */
+    /* MAIN */
+    /* ===================================== */
+
+    main {
+        flex: 1;
+        background: #6a0dad;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 25px;
+    }
+
+    /* ======================== */
+    /* GRID IMAGENS */
+    /* ======================== */
+
+    .grid {
+        width: 100%;
+        max-width: 900px;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+
+    .img-box {
+        position: relative;
+        background: #111;
+        width: 100%;
+        height: 180px;
+        border-radius: 8px;
+        cursor: pointer;
+        overflow: hidden;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .img-box img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+        transition: transform 0.3s ease;
+    }
+
+    .img-box:hover img {
+        transform: scale(1.06);
+    }
+
+    .img-box:hover {
+        transform: scale(1.05);
+        box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+    }
+
+    .img-gradient {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 70px;
+        background: linear-gradient(to top, rgba(0,0,0,0.95), rgba(0,0,0,0));
+        opacity: 0.85;
+        transition: opacity 0.3s ease;
+        pointer-events: none;
+    }
+
+    .img-title {
+        position: absolute;
+        bottom: 10px;
+        left: 10px;
+        color: white;
+        font-size: 1rem;
+        font-weight: bold;
+        text-shadow: 0 3px 6px rgba(0,0,0,0.9);
+        pointer-events: none;
+        transition: transform 0.3s ease;
+    }
+
+    .img-box:hover .img-title {
+        transform: scale(1.05);
+    }
+
+    /* ======================== */
+    /* BOTÃO */
+    /* ======================== */
+    .btn-play {
+        background: black;
+        color: white;
+        border: none;
+        padding: 12px 25px;
+        font-size: 1.1rem;
+        font-weight: bold;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .btn-play:hover {
+        transform: scale(1.07);
+        background: #222;
+        box-shadow: 0 0 12px rgba(0, 0, 0, 0.4);
+    }
+
+    .btn-play:active {
+        transform: scale(0.92);
+        background: #333;
+        box-shadow: 0 0 4px rgba(0, 0, 0, 0.6);
+    }
+
+    /* ======================== */
+    /* FOOTER */
+    /* ======================== */
+    footer {
+        background: #ffffff;
+        padding: 20px;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    footer .line1 {
+        font-size: 0.85rem;
+        font-family: "Georgia", serif;
+        font-weight: bold;
+        color: #333;
+    }
+
+    footer .line2 {
+        font-size: 0.8rem;
+        font-family: "Courier New", monospace;
+        color: #555;
+    }
+
+    footer .line3 {
+        font-size: 0.75rem;
+        font-family: "Verdana", sans-serif;
+        color: #777;
+    }
+
+    @media (max-width: 600px) {
+        .grid {
+            grid-template-columns: 1fr;
+        }
+        .img-box {
+            height: 150px;
+        }
+        .btn-play {
+            width: 100%;
+        }
+    }
+
+    /* ======================== */
+    /* MODAL DE EXPANSÃO */
+    /* ======================== */
+
+    .modal-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(0,0,0,0.75);
+        display: none;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+        backdrop-filter: blur(2px);
+        padding: 20px;
+    }
+
+    .modal-overlay.active {
+        display: flex;
+    }
+
+    .modal-image {
+        background: #000;
+        width: 80%;
+        max-width: 900px;
+        height: auto;
+        max-height: 90vh;
+        border-radius: 10px;
+        transform: scale(0.6);
+        opacity: 0;
+        transition: transform 0.35s ease, opacity 0.35s ease;
+        overflow: hidden;
+    }
+
+    .modal-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+    }
+
+    .modal-image.show {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+</style>
+
+</head>
+<body>
+
+<header>
+    <img src="20251210_1720_Meow vs Fallen Angel_simple_compose_01kc4ymcp9eags4rg8v4gjzrtg.png" alt="Logo do topo">
+</header>
+
+<main>
+    <div class="grid">
+
+        <div class="img-box" data-img="20251126_1655_Surreal Purple Landscape_simple_compose_01kb0vmp1memxsyn8r4wjcj30n.png">
+            <img src="20251126_1655_Surreal Purple Landscape_simple_compose_01kb0vmp1memxsyn8r4wjcj30n.png" alt="Imagem 1">
+            <div class="img-gradient"></div>
+            <span class="img-title">BACKGROUND</span>
+        </div>
+
+        <div class="img-box" data-img="20251126_1709_Dark Fantasy Tilemap_simple_compose_01kb0wdws5ettbdjxq5zp8g2wn.png">
+            <img src="20251126_1709_Dark Fantasy Tilemap_simple_compose_01kb0wdws5ettbdjxq5zp8g2wn.png" alt="Imagem 2">
+            <div class="img-gradient"></div>
+            <span class="img-title">TILEMAP</span>
+        </div>
+
+        <div class="img-box" data-img="20251126_1639_Furry Cat Animations_simple_compose_01kb0tp7h6fvhv3q0462yfspg5.png">
+            <img src="20251126_1639_Furry Cat Animations_simple_compose_01kb0tp7h6fvhv3q0462yfspg5.png" alt="Imagem 3">
+            <div class="img-gradient"></div>
+            <span class="img-title">SPRITE SHEET PLAYER</span>
+        </div>
+
+        <div class="img-box" data-img="20251126_1646_Fallen Angel Transformation_simple_compose_01kb0v35bweaf953tnqs0hxfmw.png">
+            <img src="20251126_1646_Fallen Angel Transformation_simple_compose_01kb0v35bweaf953tnqs0hxfmw.png" alt="Imagem 4">
+            <div class="img-gradient"></div>
+            <span class="img-title">SPRITE SHEET INIMIGO</span>
+        </div>
+
+    </div>
+
+    <button class="btn-play">Jogar agora</button>
+</main>
+
+<footer>
+    <div class="line1">Projeto desenvolvido por João Pedro Santos</div>
+    <div class="line2">Produzido no Curso Natal IA - SuperGeeks Sertãozinho</div>
+    <div class="line3">Todos os direitos reservados.</div>
+</footer>
+
+<!-- ============================= -->
+<!-- MODAL -->
+<!-- ============================= -->
+<div class="modal-overlay" id="modal">
+    <div class="modal-image" id="modalImg">
+        <img id="modalRealImg" src="">
+    </div>
+</div>
+
+<script>
+    const modal = document.getElementById("modal");
+    const modalImg = document.getElementById("modalImg");
+    const modalRealImg = document.getElementById("modalRealImg");
+
+    document.querySelectorAll(".img-box").forEach(box => {
+        box.addEventListener("click", () => {
+            const imgPath = box.getAttribute("data-img");
+
+            modalRealImg.src = imgPath;
+
+            modal.style.display = "flex";
+
+            setTimeout(() => {
+                modal.classList.add("active");
+                modalImg.classList.add("show");
+            }, 10);
+        });
+    });
+
+    modal.addEventListener("click", (e) => {
+        if (e.target === modal) {
+            modal.classList.remove("active");
+            modalImg.classList.remove("show");
+
+            setTimeout(() => {
+                modal.style.display = "none";
+                modalRealImg.src = "";
+            }, 250);
+        }
+    });
+</script>
+
+</body>
+</html>
