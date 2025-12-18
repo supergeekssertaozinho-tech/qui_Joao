@@ -30,12 +30,57 @@
 
         header {
             background: #ffffff;
-            padding: 20px;
-            text-align: center;
-
-            transform-style: preserve-3d;
+            padding: 5px;
             animation: floatZ 3s ease-in-out infinite;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
         }
+
+        
+        .sgeek {
+            display: flex;
+            flex-direction: row;
+            box-shadow: 2px 2px 10px #ffffff4f;
+            border-radius: 15px;
+            background-color: #000;
+            justify-content: center;
+            align-items: center;
+            padding: 0px 5px;
+            transition: 0.3s ease;
+            cursor: pointer;
+            color: #fff;
+        }
+
+        .sgeek:hover {
+            transform: scale(1.15);
+        }
+
+        .geektext {
+            margin: 5px;
+            padding: 10px;
+            font-weight: bold;
+            text-decoration: underline;
+            text-underline-offset: 3px;
+            font-size: 18px;
+        }
+
+        .r {
+            margin-top: 3px;
+            color: red;
+        }
+
+        header img {
+            width: 35px;
+            height: 35px;
+            margin-left: 5px;
+        }
+
+        .gamelogo img {
+            width: 90px;
+            height: 90px;
+        }
+
 
         header img {
             width: 260px;
@@ -213,6 +258,18 @@
             .btn-play {
                 width: 100%;
             }
+
+            
+            header {
+                display: flex;
+                flex-direction: column;
+            }
+
+            .sgeek {
+                padding: 10px;
+                max-width: 200px;
+                align-self: center;
+            }
         }
 
         /* ======================== */
@@ -265,7 +322,22 @@
 <body>
 
     <header>
-        <img src="20251210_1720_Meow vs Fallen Angel_simple_compose_01kc4ymcp9eags4rg8v4gjzrtg.png" alt="Logo do topo">
+        <a class="sgeek" href="https://wa.me/551635110871?text=Ol%C3%A1,%20gostaria%20de%20agendar%20uma%20aula%20demo."
+            target="_blank">
+
+            <img src="supergeeks.png" alt="logo-supergeeks" style="height: 60px; width: 60px;">
+
+            <div class="geektext">
+                <p class="b">Matrículas</p>
+                <p class="r">Abertas</p>
+            </div>
+        </a>
+
+        <h1>MEOW & Distorted World</h1>
+
+        <div class="gamelogo">
+            <img src="logo.png" alt="logo do jogo">
+        </div>
     </header>
 
     <main>
